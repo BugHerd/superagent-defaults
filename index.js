@@ -2,8 +2,6 @@
  * Module dependencies.
  */
 
-require = require('require-component')(require);
-
 var request = require('superagent');
 var Emitter = require('emitter');
 var methods = require('./methods');
