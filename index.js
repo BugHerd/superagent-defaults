@@ -3,7 +3,7 @@
  */
 
 var request = require('superagent');
-var Emitter = require('emitter');
+var events = require('events');
 var methods = require('./methods');
 
 /**
@@ -20,16 +20,19 @@ module.exports = Context;
 
 function Context(superagent) {
   if (!(this instanceof Context)) return new Context(superagent);
+
+  events.EventEmitter.call(this);
+
   this.headers = [];
   this.authCredentials = {};
   this.request = superagent || request;
 }
 
-/**
- * Inherit from `Emitter`
- */
-
-Emitter(Context.prototype);
+Context.prototype = Object.create(events.EventEmitter.prototype, {
+  constructor: {
+    value: Context,
+  },
+});
 
 /**
  * Set default auth credentials
